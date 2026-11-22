@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "title": "Firmware review (illustrative demo)",
+  "entries": [
+    { "role": "user", "text": "Review this example firmware plan before we change the code." },
+    { "role": "assistant", "blocks": [
+      { "type": "text", "text": "I'll start by checking the timing and acceptance criteria." }
+    ] },
+    { "role": "user", "text": "What should we verify on the target board?" },
+    { "role": "assistant", "blocks": [
+      { "type": "text", "text": "Measure worst-case response time under load and check that the device recovers after a restart." }
+    ] }
+  ]
+}

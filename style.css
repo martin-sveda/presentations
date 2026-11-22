@@ -1,0 +1,125 @@
+:root {
+  --slidev-code-padding: 8px 10px;
+  --slidev-code-background: #16161690 !important;
+
+  /* Siemens core palette (copied from the AsioCollab deck's tokens.css) */
+  --siemens-deep-blue: #000028;
+  --siemens-petrol: #009999;
+  --siemens-petrol-dark: #00716f;
+  --siemens-bright-petrol: #00cccc;
+  --siemens-bright-green: #00ffb9;
+  --siemens-yellow: #ffd732;
+
+  /* Siemens functional / status colours */
+  --status-good: #0f8f67;
+  --status-warn: #b76100;
+  --status-bad: #c6283b;
+  --status-info: #1f6feb;
+
+  /* Headline colour; swap for --siemens-bright-petrol or --siemens-bright-green if needed */
+  --deck-headline: var(--siemens-bright-green);
+
+  --slidev-theme-primary: var(--siemens-bright-green);
+}
+
+.slidev-layout h1 {
+  color: var(--deck-headline);
+}
+
+/* Bullets are native list markers (list-style: square in Slidev's layouts-base.css) */
+.slidev-layout li::marker {
+  color: var(--siemens-bright-green);
+}
+
+h6 {
+  text-transform: initial !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+.dark #slide-content {
+  background-color: black !important;
+}
+
+/* Transitions */
+.slidev-vclick-target {
+  transition:
+    opacity 500ms ease,
+    filter 200ms ease,
+    color 300ms ease;
+}
+
+.slidev-vclick-hidden {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(3px);
+}
+
+.fade-out-leave-active {
+  transition:
+    opacity calc(var(--slidev-transition-duration) * 0.6) ease-out,
+    filter 200ms ease;
+}
+
+.fade-out-enter-active {
+  transition:
+    opacity calc(var(--slidev-transition-duration) * 0.8) ease-in,
+    filter 200ms ease;
+  transition-delay: calc(var(--slidev-transition-duration) * 0.6);
+}
+
+.fade-out-enter-from,
+.fade-out-leave-to {
+  opacity: 0;
+  filter: blur(5px);
+}
+
+.slidev-code .line {
+  transition: opacity 200ms ease;
+}
+
+iframe {
+  background: black;
+}
+
+.slidev-code {
+  backdrop-filter: blur(10px);
+  border: 1px solid #eee1;
+}
+
+.rough-annotation > path[stroke-width='2'] {
+  stroke-width: calc(2px * var(--slidev-slide-scale));
+}
+
+.footnotes-sep {
+  display: none;
+}
+
+.footnotes > .footnotes-list {
+  margin-top: 12px;
+  opacity: 0.9;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.footnotes > .footnotes-list p {
+  margin: 0;
+}
+
+/* Watermark badge (bottom-right, every content slide) */
+.internal-watermark {
+  position: fixed;
+  right: 14px;
+  bottom: 10px;
+  z-index: 20;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffff60;
+  background: #ffffff0d;
+  border: 1px solid #ffffff1a;
+  border-radius: 999px;
+  padding: 3px 10px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "version": 1,
+    "title": "Example: investigate a failing test",
+    "entries": [
+      { "role": "user", "text": "This test fails after changing the parser. What should I check first?" },
+      { "role": "tool", "text": "Read test file", "status": "success" },
+      { "role": "assistant", "blocks": [{ "type": "text", "text": "Compare the failing assertion with the new parser contract. Check the smallest input that reproduces the failure before changing either implementation." }] },
+      { "role": "user", "text": "The empty-input case now returns an error instead of an empty result." },
+      { "role": "assistant", "blocks": [{ "type": "text", "text": "Confirm that the contract change is intentional. If it is, update that assertion and retain a test for a valid empty result. Otherwise, restore the previous behavior." }] }
+    ]
+  },
+  {
+    "version": 1,
+    "title": "Example: review a small refactor",
+    "entries": [
+      { "role": "user", "text": "Review a refactor that removes an allocation from a hot path." },
+      { "role": "tool", "text": "Search workspace", "status": "success" },
+      { "role": "assistant", "blocks": [{ "type": "text", "text": "Check buffer ownership, lifetime, and concurrency first. Removing an allocation is useful only if the replacement preserves those guarantees." }] },
+      { "role": "user", "text": "What evidence would make you confident?" },
+      { "role": "assistant", "blocks": [{ "type": "text", "text": "A focused correctness test, an explicit ownership contract, and before/after measurements using representative inputs on the target hardware." }] }
+    ]
+  },
+  {
+    "version": 1,
+    "title": "Example: add a regression test",
+    "entries": [
+      { "role": "user", "text": "Suggest a regression test for accepting a packet with a missing header." },
+      { "role": "assistant", "blocks": [{ "type": "text", "text": "Use the shortest invalid packet and assert the public error result. Also keep one valid packet case." }, { "type": "code", "language": "cpp", "text": "TEST(Parser, RejectsMissingHeader) {\n  EXPECT_EQ(parse({}), ParseError::MissingHeader);\n}" }] },
+      { "role": "user", "text": "Can I treat this suggested test as verified?" },
+      { "role": "assistant", "blocks": [{ "type": "text", "text": "Not yet. This is illustrative code: adapt it to the actual parser API and run it against both the buggy and fixed implementations." }] }
+    ]
+  }
+]
