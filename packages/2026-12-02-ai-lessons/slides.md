@@ -943,21 +943,71 @@ layoutClass: py-10
 glowSeed: 130
 ---
 
-# We had learning expectations. What about delivery?
+# From learning AI to delivering better work
 
-What was still missing between developing AI competence and putting it to work in projects?
+<div mt-7 grid grid-cols-3 items-center text-center>
+  <div px-3 py-4 rounded-xl border="1 solid emerald-500/40" bg="emerald-800/20">
+    <div i-carbon:idea mx-auto text-3xl text-emerald-300 />
+    <div mt-2 font-bold text-lg>AI skills</div>
+    <div text-sm opacity-75>Training, sharing, feedback</div>
+  </div>
+  <div relative>
+    <div absolute inset-0 flex items-center justify-center gap-2 aria-hidden="true" :class="{ 'opacity-0': $clicks >= 1 }">
+      <div flex-1 border="t dashed white/25" />
+      <span text="xs white/65" tracking-wide uppercase>The missing link</span>
+      <div flex-1 border="t dashed white/25" />
+    </div>
+    <div v-click="1" flex items-center>
+      <div w-6 h-px bg-cyan-400 shrink-0 />
+      <div flex-1 px-2 py-3 rounded-xl border="1 solid cyan-400/80" bg="cyan-900/45" class="shadow-[0_0_24px_rgba(34,211,238,0.25)]">
+        <div text-xs uppercase tracking-wide text-cyan-200>What we started trying</div>
+        <div mt-1 font-bold text-lg>Project managers + team</div>
+        <div text-sm text-cyan-100>Agree what should improve</div>
+      </div>
+      <div w-6 h-px bg-cyan-400 shrink-0 relative>
+        <div i-carbon:chevron-right absolute right-0 top="-2" text-cyan-300 />
+      </div>
+    </div>
+  </div>
+  <div px-3 py-4 rounded-xl border="1 solid violet-400/45" bg="violet-800/20">
+    <div i-carbon:flag mx-auto text-3xl text-violet-300 />
+    <div mt-2 font-bold text-lg>Project outcomes</div>
+    <div text-sm opacity-75>Check whether it improved</div>
+  </div>
+</div>
 
+<div v-click="2" mt-6 mx-auto max-w-180>
+  <div mb-2 text-xs uppercase tracking-wide text-cyan-200>Illustrative example · Make the next step clear</div>
+  <div grid grid-cols-12 items-center gap-3 text-sm leading-snug>
+    <div col-span-4 self-stretch px-3 py-2 rounded-lg border="1 solid white/15" bg="white/5">
+      <div flex items-center gap-2 mb-1 font-bold><span i-carbon:document /> Meeting notes</div>
+      <div opacity-75>“Look into slow startup.”</div>
+    </div>
+    <div i-carbon:arrow-right mx-auto text-2xl text-cyan-300 />
+    <div col-span-7 px-3 py-2 rounded-lg border="1 solid cyan-400/40" bg="cyan-900/25">
+      <div flex items-center gap-2 mb-1 font-bold><span i-carbon:list-checked /> Backlog item</div>
+      <div>Measure startup time on the test device.</div>
+      <div text-cyan-200>Done when the baseline and slowest step are recorded.</div>
+    </div>
+  </div>
+</div>
 
+<PromptBubble v-click="3" label="Takeaway" mt-3>
+Set the outcome together. Let the team choose the method.
+</PromptBubble>
 
----
-layout: two-cols-header
-layoutClass: py-10
-glowSeed: 130
----
+<!--
+We defined what people should learn and supported them with training, peer
+sharing, and feedback. We still needed to connect those skills to project needs.
+When we discussed a shared code-review agent, we found ourselves asking whether
+the same rules made sense for every task.
 
-# Bringing project managers into the picture
-
-Who connects new capabilities to project priorities and deliverables?
+We started exploring the link with project managers: pick a real priority, not
+a request to “use AI,” and agree with the team on what better looks like and how
+to check it. We began with their own work: could AI help turn meeting notes into
+backlog items the team could act on? The startup example illustrates the idea;
+it isn't a reported project result.
+-->
 
 
 ---
