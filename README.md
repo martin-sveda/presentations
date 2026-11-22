@@ -1,125 +1,72 @@
-# AI Lessons deck
+# Presentations
 
-## Development and publishing
+A pnpm workspace of Slidev decks. Each presentation lives in its own package
+under `packages/`. The current deck is [AI Lessons](./packages/2026-12-02-ai-lessons/).
 
-Use Node.js 22.18 or newer, pnpm 10.19.0, and Poppler (`pdftotext`) for PDF
-validation. On macOS, Poppler is available via `brew install poppler`.
+## Setup
+
+Use Node.js 22.18 or newer, pnpm 10.19.0, and Poppler (`pdftotext`, available
+via `brew install poppler` on macOS) to run the PDF tests. From the repo root:
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm exec playwright install chromium
-pnpm run dev
-pnpm test
-pnpm run build
-pnpm run test:pdf
-pnpm run preview
+pnpm --filter 2026-12-02-ai-lessons exec playwright install chromium
 ```
 
-The production preview serves the deck at `/presentations/`. The build also
-writes `dist/2026-12-02-ai-lessons.pdf`, available from the deck's PDF menu.
-
-After the deck and PDF are approved for the intended audience, push the source
-to `main` and run `pnpm run deploy` from the approved working tree. It rebuilds
-and checks the PDF before replacing `origin/gh-pages`. In GitHub's Pages settings,
-select **Deploy from a branch → `gh-pages` → `/ (root)`**. The expected URL is
-<https://martin-sveda.github.io/presentations/>. Confirm the site's visibility
-before publishing; a private source repository does not guarantee a private site.
-
-The chat replay in this copy is illustrative; the original internal transcript
-and planning materials are not included.
-
-## Bottleneck animation
-
-The speed-of-coding slide now uses `<DeliveryFlowPipeline />`, the four-stage
-pipe visualization in `components/delivery-flow/`. Its stages are Clarify intent,
-Code, Review, and Ship. Copy that entire folder, including its MIT `LICENSE`,
-to reuse it in another Slidev deck; no additional dependencies are required.
-The model and diagram are independent of Slidev, while the wrapper handles slide
-activity, controls, and print mode. CSS colors inherit Siemens variables with
-standalone fallbacks. `<DeliveryFlowPipeline static />` renders the export view.
-
-Pipe width represents capacity. Green tiles and the inner band preview the next
-day of processing, including queued work; spare pipe area illustrates underused
-capacity. Yellow pockets show current queues,
-capped at twelve drawn tiles with exact numeric counts. The outlet gauge compares
-sustainable output with the baseline of three changes per day. While an existing
-queue drains, actual daily delivery can temporarily exceed that sustainable rate.
-
-The presets tell the story in order: Baseline, Faster coding, Widen downstream,
-and Intent is the limit. Sliders pause playback but preserve counters and queued
-work, so the next step can drain a backlog. Presets restart the simulation.
-If capacities change after a completed eight-day run, another eight-day window
-opens without losing work; otherwise Replay starts fresh.
-Reset clears work in progress and counters but keeps capacities. Leaving the
-slide pauses playback; reduced motion disables decorative movement. Export shows
-a deterministic day-eight Faster coding scenario without controls.
-
-Intent means work with a clear outcome and acceptance criteria, not ticket count.
-The illustrative model assumes unlimited candidate demand before clarification,
-three changes per day per coding-speed multiplier, and same-day handoffs.
-Unprocessed clarified work waits before coding; later stages also retain queues.
-This models capacity and starvation, not the empirical quality of requirements.
-
-The original panel-based `<BottleneckSimulation />` is retained unchanged as an
-alternative in `components/bottleneck/`. To switch back, replace the component
-tag on the slide.
-
-### Original panel version
-
-The original, dependency-free Vue animation lives in
-`components/bottleneck/`. That module is MIT licensed; keep its `LICENSE` when
-copying it into another presentation. It contains no code or artwork from the
-training that inspired the topic. The licence applies to this module, not the
-entire deck.
-
-Use `<BottleneckSimulation />` in Slidev. Copy the whole component folder to
-reuse it. The simulation owns its controls and uses Slidev's active-slide and
-print-mode APIs; the board and model are otherwise independent of Slidev.
-Colors inherit this deck's Siemens CSS variables, with standalone fallbacks.
-
-Choose Baseline, Faster coding, or Balance flow, then run eight days, pause,
-or advance one day at a time. All three sliders are adjustable. Changing a
-capacity or preset clears the run; Reset clears counters but keeps capacities.
-Leaving the slide pauses playback. Reduced motion disables decorative movement.
-PDF export shows a deterministic final Faster coding scenario without controls.
-
-The illustrative model assumes unlimited ready work, coding capacity of three
-changes per day times the speed multiplier, and same-day handoffs. Review and
-shipping process available work up to their daily capacities; unprocessed work
-stays queued. This is a throughput illustration, not empirical productivity data.
-
-Run its model tests from the repository root:
+## Develop and preview
 
 ```sh
-node --test scripts/bottleneck.test.mjs scripts/delivery-flow.test.mjs
+pnpm --filter 2026-12-02-ai-lessons dev         # edit one deck (port 3030)
+pnpm --filter 2026-12-02-ai-lessons build       # build one deck to its own dist/
+pnpm --filter 2026-12-02-ai-lessons export-pdf  # export one deck to the root dist/
+pnpm test                                     # index and deck tests
+
+pnpm run build    # build the full Pages site and export all PDFs
+pnpm run test:pdf # validate the exported PDFs
+pnpm run preview  # open http://localhost:4173/presentations/
 ```
 
-## PDF export
+The full build replaces the root `dist/` directory and creates a landing page
+with web and PDF links for each presentation:
 
-From the repository root:
-
-```sh
-pnpm run export-pdf
+```text
+dist/
+  index.html
+  <deck-slug>/
+    index.html
+    <deck-slug>.pdf
+    assets/
 ```
 
-The published PDF contains one complete page per slide, with all click-revealed
-items visible. Export runs per slide to preserve the slide-specific background,
-waits for network idle, then waits one second for motion and layout to settle.
-Do not add `--with-clicks`: Slidev 52's per-slide exporter advances clicks using
-keyboard shortcuts, which are disabled in print mode, leaving click content
-hidden instead of producing complete pages.
+## Deploy to GitHub Pages
 
-The animated chat becomes a labeled, compact opening excerpt containing the
-first two entries without playback controls or the composer. The web version
-continues to replay normally.
+1. Review the decks, bundled assets, and PDFs for the intended audience. A
+   private repository does not guarantee a private Pages site. Do not publish
+   restricted material to a public site.
+2. Confirm `git remote get-url origin` returns
+   `git@github.com:martin-sveda/presentations.git` and that you have SSH push
+   access. Commit the approved source changes and push `main` separately:
+   `git push -u origin main`.
+3. From the repo root, run **`pnpm run deploy`** (not `pnpm deploy`). This
+   builds from the current working tree, validates the web and PDF outputs,
+   and replaces `origin/gh-pages` with the generated `dist/` contents. It
+   does not push `main`. If the build or PDF checks fail, nothing is published.
+4. For the first deployment, once the `gh-pages` branch exists, go to
+   **Settings → Pages → Build and deployment**. Choose **Deploy from a branch**,
+   select **`gh-pages`** and **`/ (root)`**, and save. No custom Actions
+   workflow is required.
+5. When Pages finishes, open <https://martin-sveda.github.io/presentations/>
+   and verify the deck and PDF links. On subsequent updates, repeat step 3.
 
-After exporting, check page count, page separation, and expected text on every
-page:
+To rehearse without pushing, run `pnpm run build`, `pnpm run test:pdf`, and
+`pnpm run preview`.
 
-```sh
-pnpm run test:pdf
-```
+## Add a deck
 
-This PDF-content regression check requires Poppler's `pdftotext` on `PATH`.
-Also inspect the PDF visually when changing slide layouts or images; text checks
-cannot establish that every graphic is positioned correctly.
+Create `packages/<YYYY-MM-DD>-<slug>/` with its own `slides.md`, assets, and
+`package.json`. Use the folder name as the package name. Follow the
+[AI Lessons package scripts](./packages/2026-12-02-ai-lessons/package.json):
+`build-base` must build to root `dist/<deck-slug>/` with base
+`/presentations/<deck-slug>/`, and `export-pdf` must write
+`dist/<deck-slug>/<deck-slug>.pdf`. Add `test:pdf` if the deck has PDF
+regression checks. Run `pnpm install` to update the shared lockfile.

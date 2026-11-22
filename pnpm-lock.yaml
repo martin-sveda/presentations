@@ -8,6 +8,15 @@ importers:
 
   .:
     devDependencies:
+      gh-pages:
+        specifier: ^6.3.0
+        version: 6.3.0
+      vite:
+        specifier: ^6.4.1
+        version: 6.4.1(@types/node@22.18.12)(jiti@2.6.1)(less@4.4.2)(tsx@4.17.0)(yaml@2.8.1)
+
+  packages/2026-12-02-ai-lessons:
+    devDependencies:
       '@iconify-json/bi':
         specifier: ^1.2.6
         version: 1.2.6
@@ -56,9 +65,6 @@ importers:
       '@vueuse/core':
         specifier: 13.9.0
         version: 13.9.0(vue@3.5.22(typescript@5.9.3))
-      gh-pages:
-        specifier: ^6.3.0
-        version: 6.3.0
       playwright-chromium:
         specifier: 1.56.1
         version: 1.56.1

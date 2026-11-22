@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process'
 import { test } from 'node:test'
 import { fileURLToPath } from 'node:url'
 
-const pdf = fileURLToPath(new URL('../dist/2026-12-02-ai-lessons.pdf', import.meta.url))
+const pdf = fileURLToPath(new URL('../../../dist/2026-12-02-ai-lessons/2026-12-02-ai-lessons.pdf', import.meta.url))
 // Raw order keeps columns separate; PDF text spacing varies with font size.
 const normalize = text => text.replace(/\s+/g, '')
 const pages = execFileSync('pdftotext', ['-raw', pdf, '-'], { encoding: 'utf-8' })
